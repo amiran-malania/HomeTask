@@ -38,15 +38,18 @@ static void cb_cleanup(struct thread_data *td) {
     free(pd);
 }
 
-// Define the engine structure
 static struct ioengine_ops ioengine = {
-    .name           = "the_best_protocol_ever",
+    .name           = "my_protocol",
     .version        = FIO_IOOPS_VERSION,
     .queue          = cb_queue,
     .init           = cb_init,
     .cleanup        = cb_cleanup,
-    .flags          = FIO_SYNCIO | FIO_DISKLESSIO, // Sequential/synchronous for simplicity
+    // FIO_SYNCIO: Handled synchronously (simple)
+    // FIO_DISKLESSIO: Essential to ignore that "127.0.0.1" isn't a real file
+    // FIO_NOEXTEND: Prevents fio from trying to 'truncate' or 'extend' the target
+    .flags          = FIO_SYNCIO | FIO_DISKLESSIO | FIO_NOEXTEND,
 };
+
 
 // Avoids linker/loader errors
 static void fio_init my_proto_register(void) {

@@ -4,42 +4,40 @@
     "--ioengine=psync",
     "--rw=randwrite",
     "--bs=4k",
-    "--size=100M",
-    "--filename=test_file.bin",
-    "--direct=1"
+    "--size=10M",
+    "--filename=test_file.bin"
   ],
   "custom_proto": [
     "--name=custom_protocol_sim",
     "--ioengine=external:/Users/abstraction_builder/Projects/Virtuozzo/the_best_protocol_ever.dylib",
     "--filename=127.0.0.1",
-    "--size=100M",
+    "--size=10M",
     "--rw=randwrite",
     "--bs=4k"
   ],
   "oltp": [
     "--name=oltp",
+    "--ioengine=psync",
     "--rw=randrw",
     "--filename=oltp_file.bin",
     "--bs=4k",
-    "--direct=1",
-    "--iodepth=64",
+    "--size=10M",
     "--rwmixread=70",
-    "--runtime=30"
+    "--runtime=10",
+    "--time_based"
   ],
   "streaming": [
     "--name=streaming",
+    "--ioengine=psync",
     "--rw=read",
     "--filename=streaming_file.bin",
     "--bs=1M",
-    "--iodepth=16",
-    "--numjobs=1",
-    "--runtime=30"
+    "--size=10M",
+    "--runtime=10",
+    "--time_based",
+    "--allow_file_create=1" 
   ],
   "network": [
-    "-c",
-    "127.0.0.1",
-    "-t",
-    "10",
-    "--json"
+    "-c", "127.0.0.1", "-t", "5", "--json"
   ]
 }
