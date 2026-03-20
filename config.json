@@ -1,0 +1,6 @@
+{
+  "baseline": ["--name=baseline", "--rw=read", "--filename=baseline_file", "--bs=128k", "--direct=1", "--iodepth=128", "--runtime=30"],
+  "oltp":     ["--name=oltp", "--rw=randrw", "--filename=oltp_file", "--bs=4k", "--direct=1", "--iodepth=64", "--rwmixread=70", "--runtime=60"],
+  "streaming": ["--name=streaming", "--rw=read", "--filename=streaming_file", "--bs=1M", "--iodepth=16", "--numjobs=1", "--runtime=60"],
+  "network":  ["-c", "127.0.0.1", "-t", "30", "--json"]
+}

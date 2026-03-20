@@ -1,0 +1,8 @@
+I'm trying to simulate having a cusotm protocol via simple boilerplate code which is inside the_best_protocol_ever.c
+
+To make this work, i need hooks to fio so i pulled the directory and compiled it. After pulling fio, we need to compile it withe following flags:
+
+gcc -shared -fPIC -rdynamic -o the_best_protocol_ever.so \
+    the_best_protocol_ever.c -I./fio \
+    -undefined dynamic_lookup
+
