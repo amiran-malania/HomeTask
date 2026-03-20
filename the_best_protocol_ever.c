@@ -1,4 +1,4 @@
-#include <string.h>  // Force system strings to load first
+#include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -10,13 +10,15 @@
 #undef strlcpy
 #endif
 
-#include "fio.h"     // Now include the fio headers
+#include "fio.h"
 
 struct my_proto_data {
     unsigned long long count;
 };
 
-// This is where you'd put your protocol-specific logic
+/**
+ * This is where custom protocol logic would be
+ */
 static enum fio_q_status cb_queue(struct thread_data *td, struct io_u *io_u) {
     struct my_proto_data *pd = td->io_ops_data;
     pd->count++;
@@ -44,14 +46,16 @@ static struct ioengine_ops ioengine = {
     .queue          = cb_queue,
     .init           = cb_init,
     .cleanup        = cb_cleanup,
-    // FIO_SYNCIO: Handled synchronously (simple)
+    // FIO_SYNCIO: Handled synchronously
     // FIO_DISKLESSIO: Essential to ignore that "127.0.0.1" isn't a real file
     // FIO_NOEXTEND: Prevents fio from trying to 'truncate' or 'extend' the target
     .flags          = FIO_SYNCIO | FIO_DISKLESSIO | FIO_NOEXTEND,
 };
 
 
-// Avoids linker/loader errors
+/**
+ * Avoids linker/loader errors
+ */
 static void fio_init my_proto_register(void) {
     register_ioengine(&ioengine);
 }

@@ -9,7 +9,7 @@ def validate_environment(config):
     """Checks for dylib existence, symbols, and iperf3 server readiness."""
     print("--- Running Pre-flight Validation ---")
     
-    # 1. Validate Custom Engine
+    # Validate Custom Engine
     custom_args = config.get('custom_proto', [])
     engine_path = None
     for arg in custom_args:
@@ -32,7 +32,7 @@ def validate_environment(config):
         except Exception:
             print("[SKIP] Could not run 'nm' for symbol check.")
 
-    # 2. Validate iperf3 Server
+    # Validate iperf3 Server
     net_args = config.get('network', [])
     target_ip = "127.0.0.1" # default
     if "-c" in net_args:
@@ -50,7 +50,6 @@ def validate_environment(config):
 
 def run_fio(name, params, queue):
     """Worker process to execute FIO with verbose error reporting."""
-    # We REMOVE --quiet so we can see the initialization errors
     cmd = ["fio", "--output-format=json"] + params
     try:
         # Run without check=True so we can manually handle the result
@@ -132,10 +131,8 @@ if __name__ == "__main__":
     with open('config.json') as f:
         config = json.load(f)
 
-    # STEP 1: VALIDATE
     validate_environment(config)
 
-    # STEP 2: LAUNCH PROCESSES
     q = Queue()
     jobs = [
         Process(target=run_fio, args=("baseline_disk", config['baseline_storage'], q)),
@@ -147,7 +144,6 @@ if __name__ == "__main__":
 
     for p in jobs: p.start()
     
-    # STEP 3: AGGREGATE
     aggregator(q, len(jobs))
     
     for p in jobs: p.join()
