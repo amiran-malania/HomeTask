@@ -1,0 +1,12 @@
+Q: If the Average Latency is low, but the 99th Percentile (P99) is extremely high, what does this tell you about the storage system?
+
+This indicates "Jitter" or "Tail Latency" issues. Most requests are fast, but a small percentage (1%) are hitting a massive bottleneck. This is often caused by resource contention (locking), or "Head-of-Line" blocking.
+I'd use more elaborated tool such as WireShark to monitor TCP traffic separatlly and than draw conclusions. The issue could also be solved by adjusting system parameters or socket options inside the protocol software.
+
+Q: Which metrics from iperf3 would you include in your report to determine if the network is the primary bottleneck?
+
+Retransmits and CWND (Congestion Window) would be my starting point. If retransmits are high, the network is dropping packets. If the iperf3 bandwidth is significantly lower than the fio throughput, the network pipe is the physical bottleneck.
+
+Q: How would you handle data aggregation for a 24-hour "Soak Test"?
+
+In the ideal scinario, I'd gather as much data as possible(all of them). If not, i'd use --log_avg_msec in fio to dump periodic samples to a CSV/Log file. Then, use a rolling window average  to visualize performance degradation over time (e.g., checking if performance drops as the disk fills or the system heats up).

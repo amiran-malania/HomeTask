@@ -112,6 +112,10 @@ def aggregator(queue, count):
             print(f" - Throughput: {total_bw_mib:.2f} MiB/s")
             print(f" - Total IOPS: {total_iops:.0f}")
             print(f" - P99 Latency: {p99_ms:.2f} ms\n")
+            p95_ns = lat_stats.get('clat_ns', {}).get('percentile', {}).get('95.000000', 0)
+            p95_ms = p95_ns / 1_000_000
+            print(f" - P95 Latency: {p95_ms:.2f} ms")
+
         
         elif res.get("type") == "network":
             # iperf3 JSON structure for sum_sent

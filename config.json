@@ -31,8 +31,8 @@
     "--ioengine=psync",
     "--rw=read",
     "--filename=streaming_file.bin",
-    "--bs=1M",
-    "--size=10M",
+    "--bs=4M",
+    "--size=10G",
     "--runtime=10",
     "--time_based",
     "--allow_file_create=1" 
