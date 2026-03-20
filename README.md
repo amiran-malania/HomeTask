@@ -7,7 +7,6 @@ bash
 git clone https://github.com
 cd fio && ./configure && make -j$(nproc)
 cd ..
-Use code with caution.
 
 2. macOS System Tuning (Shared Memory)
 FIO requires sufficient shared memory segments to manage async I/O buffers. The default macOS limits are often too low for high iodepth tests.
@@ -17,7 +16,6 @@ sudo sysctl -w kern.sysv.shmmax=52428800
 sudo sysctl -w kern.sysv.shmall=12800
 sudo sysctl -w kern.sysv.shmmni=128
 sudo sysctl -w kern.sysv.shmseg=32
-Use code with caution.
 
 🏗 Compilation
 Compile the custom protocol engine into a dynamic library. We use -undefined dynamic_lookup to allow the engine to hook into FIO's internal symbols at runtime.
@@ -26,7 +24,6 @@ gcc -shared -fPIC -rdynamic -o the_best_protocol_ever.so \
     the_best_protocol_ever.c \
     -I./fio \
     -undefined dynamic_lookup
-Use code with caution.
 
 🚀 Running the Benchmarks
 The Python harness automates the execution of multiple profiles (OLTP, Streaming, Baseline, and Network).
@@ -34,13 +31,11 @@ The Python harness automates the execution of multiple profiles (OLTP, Streaming
 In a separate terminal, start the network listener:
 bash
 iperf3 -s
-Use code with caution.
 
 2. Execute Harness
 Ensure your config.json points to the correct path of your compiled .so or .dylib.
 bash
 python3 benchmark_harness.py
-Use code with caution.
 
 📊 Analytical Theory
 Tail Latency (P99 vs Average)
