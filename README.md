@@ -5,9 +5,7 @@ This project implements a prototype for a high-performance custom storage protoc
 
 ## 🛠 Prerequisites
 Ensure you have the following installed on your system:
-* `git`, `gcc`, and `make`
-* `python3`
-* `iperf3`
+* `git`, `gcc`, `make`, `python3` and `iperf3`
 
 ## ⚙️ Setup & Compilation
 
@@ -17,7 +15,8 @@ The Makefile handles fetching dependencies, configuring FIO, and compiling the c
    ```bash
    make tune-mac
    ```
-   *(Note: This executes `sysctl` commands and will prompt for your sudo password).*
+
+   *(Note: This executes `sysctl` commands and will prompt for sudo password).*
 
 2. **Build the Engine:**
    ```bash
@@ -38,4 +37,3 @@ The Makefile handles fetching dependencies, configuring FIO, and compiling the c
    ```bash
    make run
    ```
-```
