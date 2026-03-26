@@ -1,26 +1,30 @@
 {
   "baseline_storage": [
     "--name=baseline_disk",
-    "--ioengine=psync",
+    "--ioengine=posixaio",
     "--rw=randwrite",
     "--bs=4k",
     "--size=10M",
+    "--thread",
     "--filename=test_file.bin"
   ],
   "custom_proto": [
     "--name=custom_protocol_sim",
-    "--ioengine=external:/Users/abstraction_builder/Projects/Virtuozzo/the_best_protocol_ever.dylib",
+    "--ioengine=external:./the_best_protocol_ever.dylib",
     "--filename=127.0.0.1",
     "--size=10M",
     "--rw=randwrite",
+    "--thread",
     "--bs=4k"
   ],
   "oltp": [
     "--name=oltp",
-    "--ioengine=psync",
+    "--ioengine=external:./the_best_protocol_ever.dylib",
     "--rw=randrw",
     "--filename=oltp_file.bin",
     "--bs=4k",
+    "--thread",
+    "--numjobs=16",
     "--size=10M",
     "--rwmixread=70",
     "--runtime=10",
@@ -28,11 +32,13 @@
   ],
   "streaming": [
     "--name=streaming",
-    "--ioengine=psync",
+    "--ioengine=external:./the_best_protocol_ever.dylib",
     "--rw=read",
     "--filename=streaming_file.bin",
     "--bs=4M",
     "--size=10G",
+    "--thread",
+    "--numjobs=4",
     "--runtime=10",
     "--time_based",
     "--allow_file_create=1" 
