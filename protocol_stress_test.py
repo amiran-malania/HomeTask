@@ -50,21 +50,27 @@ def validate_environment(config):
 
 def run_fio(name, params, queue):
     """Worker process to execute FIO with verbose error reporting."""
-    cmd = ["fio", "--output-format=json"] + params
+    cmd = ["./fio/fio", "--output-format=json"] + params
     try:
-        # Run without check=True so we can manually handle the result
         result = subprocess.run(cmd, capture_output=True, text=True)
         
         if result.returncode != 0:
-            # This captures the REAL reason (e.g., "Permission denied" or "Invalid engine")
             error_msg = result.stderr.strip() if result.stderr else f"Exit Code {result.returncode}"
             queue.put({"name": name, "error": error_msg})
             return
 
-        queue.put({"type": "fio", "name": name, "data": json.loads(result.stdout)})
+        # Attempt to parse JSON. If it fails, capture the raw warning FIO printed!
+        try:
+            parsed_data = json.loads(result.stdout)
+            queue.put({"type": "fio", "name": name, "data": parsed_data})
+        except json.JSONDecodeError:
+            raw_text = result.stdout.strip()[:200] # Grab the first 200 chars
+            if not raw_text:
+                raw_text = f"[Empty Output] Stderr: {result.stderr.strip()}"
+            queue.put({"name": name, "error": f"Non-JSON Output from FIO: {raw_text}"})
+
     except Exception as e:
         queue.put({"name": name, "error": str(e)})
-
 
 def run_iperf(params, queue):
     """Worker process to execute iperf3 for network baseline."""
