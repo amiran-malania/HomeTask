@@ -17,7 +17,6 @@ tune-mac:
 	@echo "=> Applying macOS shared memory tuning (requires sudo)..."
 	sudo sysctl -w kern.sysv.shmmax=52428800
 	sudo sysctl -w kern.sysv.shmall=12800
-	sudo sysctl -w kern.sysv.shmmni=128
 	sudo sysctl -w kern.sysv.shmseg=32
 	@echo "=> Tuning complete."
 
