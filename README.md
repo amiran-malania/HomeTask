@@ -4,7 +4,7 @@ This project implements a prototype for a high-performance custom storage protoc
 
 ## 🛠 Prerequisites
 Ensure you have the following installed on your system:
-* `git`, `gcc`, `make`, `python3` and `iperf3`
+* `git`, `gcc`, `make`, `fio`, `python3` and `iperf3`
 
 ## ⚙️ Setup & Compilation
 
