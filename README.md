@@ -1,4 +1,3 @@
-```markdown
 # Custom Storage Protocol Benchmarking Tool
 
 This project implements a prototype for a high-performance custom storage protocol, using `fio` as the load generation engine. The included Python harness automates the execution of multiple performance profiles (OLTP, Streaming, Baseline, and Network).
